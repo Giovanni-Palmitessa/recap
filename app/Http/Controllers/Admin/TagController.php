@@ -58,7 +58,8 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        $tags = Tag::all();
+        return view('admin.tags.edit', compact('tag'));
     }
 
     /**
