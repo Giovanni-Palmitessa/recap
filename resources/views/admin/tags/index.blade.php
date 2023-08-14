@@ -7,7 +7,7 @@
     @if (session('delete_success'))
         @php $tag = session('delete_success') @endphp
         <div class="alert alert-danger">
-            <p>Il tag "{{ $tag->name }}" è stato eliminato per sempre :(</p>
+            <p>Il tag "{{ $tag->nome }}" è stato eliminato per sempre :(</p>
         </div>
     @endif
 
