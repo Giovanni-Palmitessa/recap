@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    private $validations = [
+        'titolo' => 'required|string|max:100|min:5',
+        'descrizione' => 'required|string',
+    ];
+
+    private $validations_messages = [
+        'required' => 'Il campo :attribute è richiesto',
+        'min' => 'Il campo :attribute deve avere almeno :min caratteri',
+        'max' => 'Il campo :attribute deve avere massimo :max caratteri',
+        'exists' => 'Il campo :attribute non è valido',
+    ];
     /**
      * Display a listing of the resource.
      *
