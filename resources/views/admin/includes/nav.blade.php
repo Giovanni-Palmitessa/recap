@@ -29,15 +29,15 @@
             </ul>
           </li>
 
-          {{-- <li class="nav-item dropdown">
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Types
+              Tags
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{route('admin.types.index')}}">Index</a></li>
-              <li><a class="dropdown-item" href="{{route('admin.types.create')}}">Add New Type</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.tags.index')}}">Index</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.tags.create')}}">Add New Tag</a></li>
             </ul>
-          </li> --}}
+          </li>
 
           {{-- <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
