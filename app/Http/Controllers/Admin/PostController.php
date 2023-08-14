@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    private $validations = [
+        'titolo' => 'required|string|max:100|min:5',
+        'descrizione' => 'required|string',
+    ];
+
+    private $validations_messages = [
+        'required' => 'Il campo :attribute è richiesto',
+        'min' => 'Il campo :attribute deve avere almeno :min caratteri',
+        'max' => 'Il campo :attribute deve avere massimo :max caratteri',
+        'exists' => 'Il campo :attribute non è valido',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +38,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -38,7 +49,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+         // salvare i dati nel db se validi
+         $newPost = new Post();
+         $newPost->titolo = $data['titolo'];
+         $newPost->descrizione = $data['descrizione'];
+ 
+         $newPost->save();
+
+         return to_route('admin.posts.show', ['post' => $newPost]);
     }
 
     /**
