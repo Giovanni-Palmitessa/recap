@@ -8,7 +8,7 @@
     <h2>Posts with this tag:</h2>
     <ul>
         @foreach ($tag->posts as $post)
-            <li><a href="{{ route('admin.posts.show', ['post' => $post]) }}">{{ $post->nome }}</a></li>
+            <li><a href="{{ route('admin.posts.show', ['post' => $post]) }}">{{ $post->titolo }}</a></li>
         @endforeach
     </ul>
     
