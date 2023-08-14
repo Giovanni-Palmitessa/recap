@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    private $validations = [
+        'nome' => 'required|string|min:5|max:20',
+        'descrizione' => 'required|string|min:5|max:200',
+    ];
+
+    private $validations_messages = [
+        'required' => 'Il campo :attribute è richiesto',
+        'min' => 'Il campo :attribute deve avere almeno :min caratteri',
+        'max' => 'Il campo :attribute deve avere massimo :max caratteri',
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +81,20 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        // validare i dati del form
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+        // salvare i dati nel db se validi
+        $tag->nome = $data['nome'];
+        $tag->descrizione = $data['descrizione'];
+
+        $tag->update();
+
+        // reindirizzare su una rotta di tipo get
+
+        return to_route('admin.tags.show', ['tag' => $tag]);
     }
 
     /**
@@ -82,6 +105,13 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        foreach ($tag->posts as $post) {
+            $post->tag_id = 1;
+            $post->update();
+        }
+
+        $tag->delete();
+
+        return to_route('admin.tags.index')->with('delete_success', $tag);
     }
 }
