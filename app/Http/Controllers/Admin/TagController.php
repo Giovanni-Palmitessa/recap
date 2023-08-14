@@ -25,7 +25,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::all();
+        return view('admin.tags.index', compact('tags'));
     }
 
     /**
@@ -35,7 +36,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.tags.create');
     }
 
     /**
@@ -46,7 +47,18 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+        // salvare i dati nel db se validi
+        $newTag = new Tag();
+        $newTag->nome = $data['nome'];
+        $newTag->descrizione = $data['descrizione'];
+
+        $newTag->save();
+
+        return to_route('admin.tags.show', ['tag' => $newTag]);
     }
 
     /**
