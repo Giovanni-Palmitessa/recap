@@ -9,15 +9,15 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     private $validations = [
-        'titolo' => 'required|string|max:100|min:5',
-        'descrizione' => 'required|string',
+        'titolo'        => 'required|string|max:100|min:5',
+        'descrizione'   => 'required|string',
     ];
 
     private $validations_messages = [
-        'required' => 'Il campo :attribute è richiesto',
-        'min' => 'Il campo :attribute deve avere almeno :min caratteri',
-        'max' => 'Il campo :attribute deve avere massimo :max caratteri',
-        'exists' => 'Il campo :attribute non è valido',
+        'required'  => 'Il campo :attribute è richiesto',
+        'min'       => 'Il campo :attribute deve avere almeno :min caratteri',
+        'max'       => 'Il campo :attribute deve avere massimo :max caratteri',
+        'exists'    => 'Il campo :attribute non è valido',
     ];
     /**
      * Display a listing of the resource.
@@ -53,14 +53,14 @@ class PostController extends Controller
 
         $data = $request->all();
 
-         // salvare i dati nel db se validi
-         $newPost = new Post();
-         $newPost->titolo = $data['titolo'];
-         $newPost->descrizione = $data['descrizione'];
- 
-         $newPost->save();
+        // salvare i dati nel db se validi
+        $newPost = new Post();
+        $newPost->titolo = $data['titolo'];
+        $newPost->descrizione = $data['descrizione'];
 
-         return to_route('admin.posts.show', ['post' => $newPost]);
+        $newPost->save();
+
+        return to_route('admin.posts.show', ['post' => $newPost]);
     }
 
     /**
@@ -95,24 +95,13 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // validare i dati del form
-        $request->validate(
-            [
-                'titolo'        => 'required|string|max:100',
-                'descrizione'   => 'required|string',
-            ],
-            // custom error message
-            // [
-            //     'title.required'    => 'Title required!',
-            //     'title.min'         => 'Title needs minimum 5 letter!',
-            // ]
-        );
+        $request->validate($this->validations, $this->validations_messages);
 
         $data = $request->all();
 
         // aggiornare i dati nel db se validi
-        $post->titolo        = $data['titolo'];
-        $post->descrizione      = $data['descrizione'];
+        $post->titolo       = $data['titolo'];
+        $post->descrizione  = $data['descrizione'];
         $post->update();
 
         // ridirezionare su una rotta di tipo get
