@@ -36,7 +36,7 @@
         </tbody>
     </table>
 
-    {{-- <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,7 +50,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <form
                         action=""
-                        data-template="{{ route('admin.portfolios.destroy', ['portfolio' => '*****']) }}"
+                        data-template="{{ route('admin.posts.destroy', ['post' => '*****']) }}"
                         method="post"
                         class="d-inline-block"
                         id="confirm-delete"
@@ -62,7 +62,7 @@
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
 
     {{-- {{ $portfolios->links() }} --}}
 
