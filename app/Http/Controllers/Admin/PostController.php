@@ -49,7 +49,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+         // salvare i dati nel db se validi
+         $newPost = new Post();
+         $newPost->titolo = $data['titolo'];
+         $newPost->descrizione = $data['descrizione'];
+ 
+         $newPost->save();
+
+         return to_route('admin.posts.show', ['post' => $newPost]);
     }
 
     /**
