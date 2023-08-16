@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
 {
+    private $validations = [
+        'nome'        => 'required|string|max:20|min:1',
+    ];
+
+    private $validations_messages = [
+        'required'  => 'Il campo :attribute è richiesto',
+        'min'       => 'Il campo :attribute deve avere almeno :min caratteri',
+        'max'       => 'Il campo :attribute deve avere massimo :max caratteri',
+        'exists'    => 'Il campo :attribute non è valido',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +69,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('admin.technologies.edit', compact('technology'));
     }
 
     /**
@@ -70,7 +81,17 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, Technology $technology)
     {
-        //
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+        // aggiornare i dati nel db se validi
+        $technology->titolo       = $data['titolo'];
+        $technology->descrizione  = $data['descrizione'];
+        $technology->update();
+
+        // ridirezionare su una rotta di tipo get
+        return to_route('admin.technologies.show', ['technology' => $technology]);
     }
 
     /**
@@ -81,6 +102,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        return to_route('admin.technologies.index')->with('delete_success', $technology);
     }
 }
