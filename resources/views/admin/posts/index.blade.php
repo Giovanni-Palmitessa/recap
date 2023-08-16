@@ -16,6 +16,8 @@
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Titolo</th>
+                <th scope="col">Tag</th>                
+                <th scope="col">Tecnologia</th> 
             </tr>
         </thead>
         <tbody>
@@ -23,6 +25,12 @@
                 <tr>
                     <th scope="row">{{ $post->id }}</th>
                     <td>{{ $post->titolo }}</td>
+                    <td><a href="{{ route('admin.tags.show', ['tag' => $post->tag]) }}">{{ $post->tag->nome }}</a></td>
+                    <td>
+                        @foreach ($post->technologies as $technology)
+                            <a href="{{ route('admin.technologies.show', ['technology' => $technology]) }}">{{ $technology->nome }}</a>{{ !$loop->last ? ',' : '' }}
+                        @endforeach
+                    </td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('admin.posts.show', ['post' => $post]) }}">View</a>
                         <a class="btn btn-warning" href="{{ route('admin.posts.edit', ['post' => $post]) }}">Edit</a>
