@@ -46,7 +46,35 @@
                         {{ $message }}
                     </div>  
                 @enderror
-            </div>            
+            </div>       
+
+
+            <div class="mb-3">
+                <label
+                for="tag_id"
+                class="form-label
+                @error('tag_id') is-invalid @enderror">Tag</label>
+                <select
+                    class="form-select" 
+                    aria-label="Default select" 
+                    id="tag_id" name="tag_id"
+                    value="{{ old('tag_id') }}"
+                >
+                    @foreach($tags as $tag)
+                        <option
+                            value="{{ $tag->id }}"
+                            @if (old('tag_id', $post->tag->id) == $tag->id) selected @endif
+                        >
+                            {{ $tag->nome }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('tag_id')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>  
+                @enderror
+            </div>     
 
             <div class="create-button">
                 <a class="btn btn-secondary" href="/admin/posts">Back</a>

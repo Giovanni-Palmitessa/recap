@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Tag;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -83,7 +84,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -100,6 +102,7 @@ class PostController extends Controller
         $data = $request->all();
 
         // aggiornare i dati nel db se validi
+        $post->tag_id       = $data['tag_id'];
         $post->titolo       = $data['titolo'];
         $post->descrizione  = $data['descrizione'];
         $post->update();
@@ -116,6 +119,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        //dissociare tutti le technology dal post
+        $post->technologies()->detach();
+
+        // elimino il post
         $post->delete();
         return to_route('admin.posts.index')->with('delete_success', $post);
     }
