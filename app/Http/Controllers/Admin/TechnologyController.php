@@ -101,8 +101,7 @@ class TechnologyController extends Controller
         $data = $request->all();
 
         // aggiornare i dati nel db se validi
-        $technology->titolo       = $data['titolo'];
-        $technology->descrizione  = $data['descrizione'];
+        $technology->nome       = $data['nome'];
         $technology->update();
 
         // ridirezionare su una rotta di tipo get
