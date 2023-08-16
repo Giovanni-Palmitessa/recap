@@ -74,7 +74,22 @@
                         {{ $message }}
                     </div>  
                 @enderror
-            </div>     
+            </div>   
+            
+            <div class="mb-3">
+                <h3>Tecnologia</h3>
+    
+                @foreach ($technologies as $technology)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="{{$technology->id}}" id="technology-{{$technology->id}}" name="technologies[]"  @if (in_array($technology->id, old('technologies', $post->technologies->pluck('id')->all())))
+                        checked  
+                    @endif >
+                    <label class="form-check-label" for="flexCheckDefault">
+                      {{$technology->nome}}
+                    </label>
+                </div>
+                @endforeach
+            </div>
 
             <div class="create-button">
                 <a class="btn btn-secondary" href="/admin/posts">Back</a>

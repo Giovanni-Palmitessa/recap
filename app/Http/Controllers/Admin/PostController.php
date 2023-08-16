@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Technology;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -39,7 +40,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $tags = Tag::all();
+        $technologies = Technology::all();
+        return view('admin.posts.create', compact('tags', 'technologies'));
     }
 
     /**
@@ -57,9 +60,13 @@ class PostController extends Controller
         // salvare i dati nel db se validi
         $newPost = new Post();
         $newPost->titolo = $data['titolo'];
+        $newPost->tag_id = $data['tag_id'];
         $newPost->descrizione = $data['descrizione'];
 
         $newPost->save();
+
+        // associare i tag
+        $newPost->technologies()->sync($data['technologies'] ?? []);
 
         return to_route('admin.posts.show', ['post' => $newPost]);
     }
@@ -85,7 +92,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $tags = Tag::all();
-        return view('admin.posts.edit', compact('post', 'tags'));
+        $technologies = Technology::all();
+        return view('admin.posts.edit', compact('post', 'tags', 'technologies'));
     }
 
     /**
@@ -106,6 +114,9 @@ class PostController extends Controller
         $post->titolo       = $data['titolo'];
         $post->descrizione  = $data['descrizione'];
         $post->update();
+
+        // associare i tag
+        $post->technologies()->sync($data['technologies'] ?? []);
 
         // ridirezionare su una rotta di tipo get
         return to_route('admin.posts.show', ['post' => $post]);
