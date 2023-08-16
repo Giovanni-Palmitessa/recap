@@ -15,7 +15,8 @@ class TechnologyController extends Controller
      */
     public function index()
     {
-        //
+        $technologies = Technology::all();
+        return view('admin.technologies.index', compact('technologies'));
     }
 
     /**
@@ -25,7 +26,8 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        $technologies = Technology::all();
+        return view('admin.technologies.create', compact('technologies'));
     }
 
     /**
@@ -36,7 +38,20 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validare i dati del form
+        $request->validate($this->validations, $this->validations_messages);
+
+        $data = $request->all();
+
+        // salvare i dati nel db se validi
+        $newTechnology = new Technology();
+        $newTechnology->nome = $data['nome'];
+
+        $newTechnology->save();
+
+        // reindirizzare su una rotta di tipo get
+
+        return to_route('admin.technologies.show', ['technology' => $newTechnology]);
     }
 
     /**
@@ -47,7 +62,7 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', compact('technology'));
     }
 
     /**
