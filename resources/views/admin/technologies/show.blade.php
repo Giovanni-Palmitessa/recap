@@ -7,7 +7,7 @@
     <h2>Posts with this technology:</h2>
     <ul>
         @foreach ($technology->posts as $post)
-            <li><a href="{{ route('admin.posts.show', ['post' => $post]) }}">{{ $post->nome }}</a></li>
+            <li><a href="{{ route('admin.posts.show', ['post' => $post]) }}">{{ $post->titolo }}</a></li>
         @endforeach
     </ul>
     
