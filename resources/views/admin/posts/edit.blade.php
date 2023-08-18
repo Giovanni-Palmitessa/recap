@@ -15,6 +15,10 @@
             @csrf
             @method('put')
 
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            </div>
+
             <div class="mb-3">
                 <label for="titolo" class="form-label">titolo</label>
                 <input 
