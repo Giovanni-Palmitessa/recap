@@ -12,6 +12,10 @@ class Post extends Model
 {
     use HasFactory;
 
+    public function getRouteKey() {
+        return $this->slug;
+    }
+
     public function tag()
     {
         return $this->belongsTo(Tag::class);
