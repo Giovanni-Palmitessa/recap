@@ -91,8 +91,9 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($slug)
     {
+        $post = Post::where('slug', $slug)->firstOrFail();
         $tags = Tag::all();
         $technologies = Technology::all();
         return view('admin.posts.edit', compact('post', 'tags', 'technologies'));
@@ -105,8 +106,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $slug)
     {
+        $post = Post::where('slug', $slug)->firstOrFail();
+
         $request->validate($this->validations, $this->validations_messages);
 
         $data = $request->all();
@@ -132,6 +135,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        // $post = Post::where('slug', $slug)->firstOrFail();
         //dissociare tutti le technology dal post
         $post->technologies()->detach();
 

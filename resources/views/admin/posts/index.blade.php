@@ -62,6 +62,7 @@
                         method="post"
                         class="d-inline-block"
                         id="confirm-delete"
+                        {{-- data-id="{{$post->slug}}" --}}
                     >
                         @csrf
                         @method('delete')
