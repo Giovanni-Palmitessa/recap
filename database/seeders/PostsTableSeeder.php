@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Technology;
+use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,9 +23,13 @@ class PostsTableSeeder extends Seeder
         $technologies = Technology::all()->pluck('id');
 
         for ($i = 0; $i < 10; $i++) {
+            $titolo = $faker->words(rand(1, 4), true);
+            $slug = Str::slug($titolo);
+
             $post = Post::create([
                 'tag_id' => $faker->randomElement($tags)->id,
-                'titolo' => $faker->words(rand(1, 4), true),
+                'titolo' => $titolo,
+                'slug' => $slug,
                 'descrizione' => $faker->paragraph(rand(2, 10), true),
             ]);
             // associare il post ad un certo numero di technologies
