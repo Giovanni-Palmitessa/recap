@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -57,12 +58,15 @@ class PostController extends Controller
 
         $data = $request->all();
 
+        $imagePath = Storage::put('uploads', $data['image']);
+
         // salvare i dati nel db se validi
         $newPost = new Post();
-        $newPost->titolo = $data['titolo'];
-        $newPost->slug = Post::slugger($data['titolo']);
-        $newPost->tag_id = $data['tag_id'];
-        $newPost->descrizione = $data['descrizione'];
+        $newPost->titolo        = $data['titolo'];
+        $newPost->slug          = Post::slugger($data['titolo']);
+        $newPost->image         = $imagePath;
+        $newPost->tag_id        = $data['tag_id'];
+        $newPost->descrizione   = $data['descrizione'];
 
         $newPost->save();
 
@@ -113,6 +117,19 @@ class PostController extends Controller
         $request->validate($this->validations, $this->validations_messages);
 
         $data = $request->all();
+
+        // immagine caricata dall'utente
+        if (isset($data['image'])) {
+
+            $imagePath = Storage::put('uploads', $data['image']);
+
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+
+            $post->image = $imagePath;
+        }
+
 
         // aggiornare i dati nel db se validi
         $post->tag_id       = $data['tag_id'];

@@ -6,6 +6,10 @@
     <form method="POST" action="{{ route('admin.posts.store') }}" enctype="multipart/form-data" novalidate>
         @csrf
 
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+        </div>
+
         <div class="mb-3">
             <label for="titolo" class="form-label">Titolo</label>
             <input
@@ -21,6 +25,7 @@
                 </div>
             @enderror
         </div>
+        
 
         <div class="mb-3">
             <label for="tag" class="form-label">Tag</label>

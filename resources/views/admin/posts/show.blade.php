@@ -7,6 +7,11 @@
         <h3>ID: {{ $post->id }}</h3>
 
         <p>{{ $post->descrizione }}</p>
+
+        @if ($post->image)
+            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->titolo }}">
+        @endif
+
     </div>
 
 @endsection

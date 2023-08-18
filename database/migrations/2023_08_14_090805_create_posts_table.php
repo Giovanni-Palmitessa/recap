@@ -19,6 +19,7 @@ return new class extends Migration
             $table->id();
             $table->string('titolo', 50);
             $table->string('slug', 100)->unique();
+            $table->string('image', 200)->nullable();
             $table->text('descrizione');
             $table->timestamps();
         });
