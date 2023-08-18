@@ -18,6 +18,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('titolo', 50);
+            $table->string('slug', 100)->unique();
             $table->text('descrizione');
             $table->timestamps();
         });

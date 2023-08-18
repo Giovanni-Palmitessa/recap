@@ -22,9 +22,13 @@ class PostsTableSeeder extends Seeder
         $technologies = Technology::all()->pluck('id');
 
         for ($i = 0; $i < 10; $i++) {
+            $titolo = $faker->words(rand(1, 4), true);
+            $slug = Post::slugger($titolo);
+
             $post = Post::create([
                 'tag_id' => $faker->randomElement($tags)->id,
-                'titolo' => $faker->words(rand(1, 4), true),
+                'titolo' => $titolo,
+                'slug' => $slug,
                 'descrizione' => $faker->paragraph(rand(2, 10), true),
             ]);
             // associare il post ad un certo numero di technologies
