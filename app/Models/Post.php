@@ -20,4 +20,16 @@ class Post extends Model
     {
         return $this->belongsToMany(Technology::class);
     }
+
+    public static function slugger($title) {
+        // generare lo slug base
+       $base_slug = Str::slug($title);
+       $i = 1;
+       $slug = $base_slug;
+
+       while (Post::where('slug', $slug)->get()) {
+        $slug = $base_slug. '-' . $i;
+        $i++;
+       }
+    }
 }

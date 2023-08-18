@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\Technology;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -60,6 +61,7 @@ class PostController extends Controller
         // salvare i dati nel db se validi
         $newPost = new Post();
         $newPost->titolo = $data['titolo'];
+        $newPost->slug = Str::slug($data['titolo']);
         $newPost->tag_id = $data['tag_id'];
         $newPost->descrizione = $data['descrizione'];
 
