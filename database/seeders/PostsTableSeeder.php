@@ -24,7 +24,7 @@ class PostsTableSeeder extends Seeder
 
         for ($i = 0; $i < 10; $i++) {
             $titolo = $faker->words(rand(1, 4), true);
-            $slug = Str::slug($titolo);
+            $slug = Post::slugger($titolo);
 
             $post = Post::create([
                 'tag_id' => $faker->randomElement($tags)->id,

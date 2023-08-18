@@ -27,9 +27,10 @@ class Post extends Model
        $i = 1;
        $slug = $base_slug;
 
-       while (Post::where('slug', $slug)->get()) {
+       while (Post::where('slug', $slug)->first()) {
         $slug = $base_slug. '-' . $i;
         $i++;
        }
+       return $slug;
     }
 }
